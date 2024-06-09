@@ -1,0 +1,70 @@
+### Ir a la pagina principal
+http://localhost:3000
+
+### Mostrar todos los productos
+GET http://localhost:3000/productos
+
+### Mostrar los productos de una cierta categoría
+GET http://localhost:3000/productos?categoria=Portátil
+
+### Mostrar un producto por id
+GET http://localhost:3000/productos/60d21b4667d0d8992e610c85
+
+### Agregar un producto
+POST http://localhost:3000/productos/
+content-type: application/json
+
+{
+    "nombre": "Nuevo Producto",
+    "importe": 250000,
+    "categoria": "Smartphone"
+}
+
+### Borrar un producto por id
+DELETE http://localhost:3000/productos/60d21b4667d0d8992e610c85
+
+### Modificar/Actualizar un producto parcialmente
+PATCH http://localhost:3000/productos/60d21b4667d0d8992e610c85
+content-type: application/json
+
+{
+    "importe": 200000
+}
+
+### Modificar/Actualizar un producto completamente
+PUT http://localhost:3000/productos/60d21b4667d0d8992e610c85
+content-type: application/json
+
+{
+    "nombre": "Producto Actualizado",
+    "importe": 300000,
+    "categoria": "Tablet"
+}
+
+### Obtener productos por rango de precio
+GET http://localhost:3000/productos/rango-precio?min=100000&max=200000
+
+### Obtener productos por categoría
+GET http://localhost:3000/productos/categoria/Tablet
+
+### Actualizar múltiples productos
+PUT http://localhost:3000/productos/bulk-update
+content-type: application/json
+
+{
+    "ids": ["60d21b4667d0d8992e610c85", "60d21b4667d0d8992e610c86"],
+    "update": {
+        "categoria": "Actualizado"
+    }
+}
+
+### Eliminar múltiples productos
+DELETE http://localhost:3000/productos/bulk-delete
+content-type: application/json
+
+{
+    "ids": ["60d21b4667d0d8992e610c85", "60d21b4667d0d8992e610c86"]
+}
+
+### Buscar productos por nombre
+GET http://localhost:3000/productos/buscar?q=Notebook
