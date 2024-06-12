@@ -2,6 +2,7 @@
 
 En este ejercicio, vas a crear una API REST utilizando Express y Mongoose para gestionar una colección de productos tecnológicos. La API debe permitir realizar operaciones CRUD (Crear, Leer, Actualizar y Borrar) sobre los productos. Los productos ya vienen incluidos en el repositorio.
 
+* Forma alternativa de correr el proyecto node --run start
 ## Requisitos
 
 1. **Configurar el proyecto:**
