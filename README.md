@@ -1,13 +1,13 @@
-# Enunciado del Ejercicio
+### CRUD de Productos
+### API de Tecnologia desarrollada en Node.js con Express.js y MongoDB
+### Autor: José Barone
 
-En este ejercicio, vas a crear una API REST utilizando Express y Mongoose para gestionar una colección de productos tecnológicos. La API debe permitir realizar operaciones CRUD (Crear, Leer, Actualizar y Borrar) sobre los productos. Los productos ya vienen incluidos en el repositorio.
-
-* Forma alternativa de correr el proyecto node --run start
 ## Requisitos
 
 1. **Configurar el proyecto:**
    - Inicializa un nuevo proyecto con `npm init`.
    - Instala las dependencias necesarias: `express`, `mongoose`, y `morgan`.
+   - configura el package.json en "type": "module" y añade el script "start": "node --watch server.js", 
 
 2. **Configurar Mongoose:**
    - Crea una conexión a MongoDB usando Mongoose.
@@ -32,7 +32,12 @@ En este ejercicio, vas a crear una API REST utilizando Express y Mongoose para g
    - `GET /productos/categorias`: Devuelve una lista de todas las categorías disponibles.
    - `GET /productos/nombre/:nombre`: Devuelve los productos que coinciden con el nombre especificado (búsqueda parcial).
    - `GET /productos/rango/:min/:max`: Devuelve los productos cuyo importe esté dentro del rango especificado.
+ 
+6. **Implementar 2 rutas mas para modificar y actualizar varios productos:** 
+   - `GET /productos/bulk-update`: Actualizar múltiples productos
+   - `GET /productos/bulk-delete`: Eliminar múltiples productos
 
 ## Entrega
 
-Sube tu código a un repositorio en GitHub y proporciona el enlace para revisión. Asegúrate de incluir instrucciones claras sobre cómo ejecutar tu proyecto en el archivo README.md del repositorio. Además, incluye un archivo `api.http` con las llamadas a la API para realizar las pruebas correspondientes.
+- El trabajo va a estar subido en repositorio de GitHub 
+### https://github.com/Joseargentina/CRUD-de-productos-con-Mongoose-Jose

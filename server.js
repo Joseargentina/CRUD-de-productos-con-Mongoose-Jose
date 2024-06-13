@@ -35,38 +35,6 @@ app.get('/productos', (req, res) => {
     })
 })
 
-// Obtener productos por rango de precio
-app.get('/productos/rango-precio', (req, res) => {
-  const { min, max } = req.query
-  const query = { importe: { $gte: min, $lte: max } }
-  Tecnologia.find(query)
-    .then((peliculas) => {
-      res.json(peliculas)
-    })
-    .catch((error) => {
-      console.error('Error al obtener peliculas: ', error)
-      res.status(500).send('Error al obtener las peliculas')
-    })
-})
-
-// Devuelve un producto por su ID.
-app.get('/productos/:id', (req, res) => {
-  const { id } = req.params
-
-  Tecnologia.findById(id)
-    .then((productos) => {
-      if (productos) {
-        res.status(200).json(productos)
-      } else {
-        res.status(404).send('Error al obtener el producto por ID')
-      }
-    })
-    .catch((error) => {
-      console.error('Error al obtener el producto: ', error)
-      res.status(500).send('Error al obtener el producto')
-    })
-})
-
 // Crea un nuevo producto.
 app.post('/productos', (req, res) => {
   const nuevoProducto = new Tecnologia(req.body)
@@ -84,6 +52,154 @@ app.post('/productos', (req, res) => {
     })
 })
 
+// (las demas rutas de /:id  al final porque me causaban algunois errores con otras rutas)
+
+// -----------Rutas Adicionales----------------
+//  Devuelve los productos con un importe mayor al especificado
+app.get('/productos/importes/mayor/:importe', (req, res) => {
+  const importe = req.params.importe
+  const query = !importe ? {} : { importe: { $gt: importe } }
+  Tecnologia.find(query)
+    .then((productos) => {
+      if (productos) {
+        res.json(productos)
+      } else {
+        res.status(404).send('No se encontraron productos con un importe menor a ' + importe)
+      }
+    })
+    .catch((err) => {
+      console.error('Error al obtener los productos:', err)
+      res.status(500).send('Error al obtener los productos por importe')
+    })
+})
+// Devuelve los productos con un importe menor al especificado.
+app.get('/productos/importes/menor/:importe', (req, res) => {
+  const importe = req.params.importe
+  const query = !importe ? {} : { importe: { $lt: importe } }
+  Tecnologia.find(query)
+    .then((productos) => {
+      if (productos) {
+        res.json(productos)
+      } else {
+        res.status(404).send('No se encontraron productos con un importe menor a ' + importe)
+      }
+    })
+    .catch((err) => {
+      console.error('Error al obtener los productos:', err)
+      res.status(500).send('Error al obtener los productos por importe')
+    })
+})
+// Devuelve una lista de todas las categorías disponibles
+app.get('/productos/categoria/:categoria', (req, res) => {
+  const categoria = req.params.categoria
+  const query = !categoria ? {} : { categoria: { $regex: categoria, $options: 'i' } }
+
+  Tecnologia.find(query)
+    .then((productos) => {
+      if (productos) {
+        res.json(productos)
+      } else {
+        res.status(404).send('No se encontraron productos con esa categoria')
+      }
+    })
+    .catch((err) => {
+      console.error('Error al obtener los productos:', err)
+      res.status(500).send('Error al obtener los productos por categoria')
+    })
+})
+// Devuelve los productos que coinciden con el nombre especificado (búsqueda parcial)
+app.get('/productos/buscar', (req, res) => {
+  const nombre = req.query.q
+  const query = !nombre ? {} : { nombre: { $regex: nombre, $options: 'i' } }
+
+  Tecnologia.find(query)
+    .then((productos) => {
+      if (productos) {
+        res.json(productos)
+      } else {
+        res.status(404).send('No se encontraron productos con ese nombre')
+      }
+    })
+    .catch((err) => {
+      console.error('Error al obtener los productos:', err)
+      res.status(500).send('Error al obtener los productos')
+    })
+})
+
+// Obtener productos por rango de precio
+app.get('/productos/rango-precio', (req, res) => {
+  const { min, max } = req.query
+  const query = { importe: { $gte: min, $lte: max } }
+  Tecnologia.find(query)
+    .then((peliculas) => {
+      res.json(peliculas)
+    })
+    .catch((error) => {
+      console.error('Error al obtener peliculas: ', error)
+      res.status(500).send('Error al obtener las peliculas')
+    })
+})
+
+// Actualizar múltiples productos
+app.put('/productos/bulk-update', (req, res) => {
+  const { ids, update } = req.body
+
+  Tecnologia.updateMany(
+    { _id: { $in: ids } },
+    { $set: update }
+  )
+    .then((result) => {
+      console.log(result)
+      if (result.modifiedCount === 0) {
+        res.status(404).send('No se encontraron productos para actualizar')
+      } else {
+        res.send(`Se actualizaron ${result.modifiedCount} productos`)
+      }
+    })
+    .catch((err) => {
+      console.error('Error al actualizar los productos:', err)
+      res.status(500).send('Error al actualizar los productos: ' + err.message)
+    })
+})
+
+// Eliminar múltiples productos
+app.delete('/productos/bulk-delete', (req, res) => {
+  const { ids } = req.body
+
+  Tecnologia.deleteMany(
+    { _id: { $in: ids } }
+  )
+    .then((result) => {
+      if (result.deletedCount === 0) {
+        res.status(404).send('No se encontraron productos para eliminar')
+      } else {
+        res.send(`Se eliminaron ${result.deletedCount} productos`)
+      }
+    })
+    .catch((err) => {
+      console.error('Error al eliminar los productos:', err)
+      res.status(500).send('Error al eliminar los productos: ' + err.message)
+    })
+})
+
+// -----------Rutas de ID-------
+// Devuelve un producto por su ID.
+app.get('/productos/:id', (req, res) => {
+  const { id } = req.params
+
+  Tecnologia.findById(id)
+    .then((productos) => {
+      if (productos) {
+        res.status(200).json(productos)
+      } else {
+        res.status(404).send('Error al obtener el producto por ID')
+      }
+    })
+    .catch((error) => {
+      console.error('Error al obtener el producto: ', error)
+      res.status(500).send('Error al obtener el producto')
+    })
+})
 // Elimina un producto por su ID.
 app.delete('/productos/:id', (req, res) => {
   const { id } = req.params
@@ -100,7 +216,6 @@ app.delete('/productos/:id', (req, res) => {
       res.status(500).send('Error al eliminar el producto')
     })
 })
-
 // Actualiza parcialmente un producto por su ID.
 app.patch('/productos/:id', (req, res) => {
   const { id } = req.params
@@ -119,7 +234,6 @@ app.patch('/productos/:id', (req, res) => {
       res.status(500).send('Error al actualizar el producto')
     })
 })
-
 // Actualiza completamente un producto por su ID.
 app.put('/productos/:id', (req, res) => {
   const { id } = req.params

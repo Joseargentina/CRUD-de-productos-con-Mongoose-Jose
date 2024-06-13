@@ -5,54 +5,67 @@ http://localhost:3000
 GET http://localhost:3000/productos
 
 ### Mostrar los productos de una cierta categoría
-GET http://localhost:3000/productos?categoria=Portátil
+GET http://localhost:3000/productos?categoria=portátil
 
 ### Mostrar un producto por id
-GET http://localhost:3000/productos/6669f965e645616e727e9983
+GET http://localhost:3000/productos/6668dac2b4d9edd4def3cdfc
 
 ### Agregar un producto
 POST http://localhost:3000/productos/
 content-type: application/json
 
 {
-    "nombre": "Nuevo Producto",
+    "nombre": "Nuevo Producto 7",
     "importe": 758000,
     "categoria": "Smartphone"
 }
 
 ### Borrar un producto por id
-DELETE http://localhost:3000/productos/6669f8854cbe0daf38103e77
+DELETE http://localhost:3000/productos/666b38eb6ed618033e60bea9
 
 ### Modificar/Actualizar un producto parcialmente
-PATCH http://localhost:3000/productos/6669f965e645616e727e9983
+PATCH http://localhost:3000/productos/6668dac2b4d9edd4def3cdfa
 content-type: application/json
 
 {
-    "importe": 200000
+    "importe": 275000
 }
 
 ### Modificar/Actualizar un producto completamente
-PUT http://localhost:3000/productos/6669f965e645616e727e9983
+PUT http://localhost:3000/productos/6668dac2b4d9edd4def3cdfa
 content-type: application/json
 
 {
-    "nombre": "Producto Actualizado",
-    "importe": 300000,
+    "nombre": "Producto Actualizados",
+    "importe": 350000,
     "categoria": "Tablet"
 }
+
+
+### Rutas Adicionales
+
+###  Devuelve los productos con un importe mayor al especificado
+GET http://localhost:3000/productos/importes/mayor/80000
+
+### Devuelve los productos con un importe menor al especificado.
+GET http://localhost:3000/productos/importes/menor/75000
+
+### Obtener productos por categoría
+GET http://localhost:3000/productos/categoria/Tablet
+
+### Buscar productos por nombre
+GET http://localhost:3000/productos/buscar?q=macbook
 
 ### Obtener productos por rango de precio
 GET http://localhost:3000/productos/rango-precio?min=100000&max=200000
 
-### Obtener productos por categoría
-GET http://localhost:3000/productos/categoria/Tablet
 
 ### Actualizar múltiples productos
 PUT http://localhost:3000/productos/bulk-update
 content-type: application/json
 
 {
-    "ids": ["60d21b4667d0d8992e610c85", "60d21b4667d0d8992e610c86"],
+    "ids": ["6668dac2b4d9edd4def3cdf9", "6668dac2b4d9edd4def3cdfa"],
     "update": {
         "categoria": "Actualizado"
     }
@@ -63,8 +76,6 @@ DELETE http://localhost:3000/productos/bulk-delete
 content-type: application/json
 
 {
-    "ids": ["60d21b4667d0d8992e610c85", "60d21b4667d0d8992e610c86"]
+    "ids": ["666b3abe0c57fac661c33418", "666b37c99531ec53c1711611"]
 }
 
-### Buscar productos por nombre
-GET http://localhost:3000/productos/buscar?q=Notebook
