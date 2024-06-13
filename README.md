@@ -1,8 +1,8 @@
-## CRUD de Productos con Mongoose
+# CRUD de Productos con Mongoose
 ## API de Tecnologia desarrollada en Node.js con Express.js y MongoDB
-# Autor: José Barone
+### Autor: José Barone
 
-# Requisitos
+### Requisitos
 
 1. **Configurar el proyecto:**
    - Inicializa un nuevo proyecto con `npm init`.
@@ -37,7 +37,7 @@
    - `GET /productos/bulk-update`: Actualizar múltiples productos
    - `GET /productos/bulk-delete`: Eliminar múltiples productos
 
-## Entrega
+### Entrega
 
 - El trabajo va a estar subido en repositorio de GitHub 
-# https://github.com/Joseargentina/CRUD-de-productos-con-Mongoose-Jose
+#### https://github.com/Joseargentina/CRUD-de-productos-con-Mongoose-Jose
